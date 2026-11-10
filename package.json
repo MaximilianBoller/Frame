@@ -1,0 +1,13 @@
+{
+  "name": "projektportal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "esbuild src/app.js --bundle --format=esm --target=es2022 --outfile=public/app.js",
+    "test": "node --test tests"
+  },
+  "dependencies": { "@zip.js/zip.js": "^2.8.0" },
+  "devDependencies": { "esbuild": "^0.25.0" },
+  "engines": { "node": ">=20" }
+}

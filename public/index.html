@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data: https://raw.githubusercontent.com; media-src 'self' blob: https://raw.githubusercontent.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>FRAME — Projekte teilen</title>
+  <meta name="description" content="Bilder und Videos, an einem Ort. Projekte ansehen und Originaldateien herunterladen.">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./config.js" defer></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#"><span class="brand-mark">F</span> FRAME<span class="brand-divider"></span><span class="brand-sub">Projektübergabe</span></a><div class="header-right"><span class="status-dot"></span><span class="public-note">Öffentliche Dateien</span><button id="settings" class="button ghost small">Verwalten ↗</button></div></header>
+  <div id="app"></div>
+  <footer><a class="footer-logo" href="#">FRAME</a><span>Gute Arbeit verdient eine gute Übergabe.</span><span>Bilder. Videos. Alles an einem Ort.</span></footer>
+  <dialog id="modal"><div id="modal-body"></div></dialog>
+  <dialog id="lightbox"><button id="lightbox-close" class="round close" aria-label="Vorschau schließen">✕</button><button id="previous" class="round previous" aria-label="Vorherige Datei">←</button><div id="lightbox-content"></div><button id="next" class="round next" aria-label="Nächste Datei">→</button><div id="lightbox-caption"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript>Bitte JavaScript aktivieren, um Projekte und Downloads zu öffnen.</noscript>
+</body>
+</html>
