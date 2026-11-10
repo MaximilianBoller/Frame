@@ -30,6 +30,8 @@ Für ZIP-Downloads können Chrome und Edge am Computer direkt auf die Festplatte
 
 Der Workflow installiert reproduzierbar die Abhängigkeiten, führt Tests aus, baut JavaScript und veröffentlicht ausschließlich `public/`. Eigene Medien werden automatisch mit veröffentlicht. Es werden keine Tokens oder andere Secrets mitgeliefert.
 
+Mit einem bereits initialisierten lokalen Git-Repository und bestehender Git-Credential-Manager-Anmeldung als `MaximilianBoller` übernimmt `npm run publish:github` den Push, die Pages-Einrichtung und den Start des Workflows. Das Skript prüft zuerst die tatsächliche Account-Identität und bricht bei einem anderen Account ab. Es erzeugt keine neuen Zugangsschlüssel.
+
 Für ein anderes Repository `public/config.js` anpassen. Die Website funktioniert sowohl unter einem Repository-Unterpfad als auch mit eigener Domain. Die Dateien nicht per `file://` öffnen; zum lokalen Ausprobieren den Entwicklungsserver verwenden.
 
 ## Hochladen über die Website

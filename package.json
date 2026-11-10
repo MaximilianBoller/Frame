@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "esbuild src/app.js --bundle --format=esm --target=es2022 --outfile=public/app.js",
+    "publish:github": "node scripts/publish.mjs",
     "test": "node --test tests"
   },
   "dependencies": { "@zip.js/zip.js": "^2.8.0" },
