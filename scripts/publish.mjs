@@ -1,6 +1,6 @@
 // Uses the existing Git Credential Manager login; never writes or prints a token.
 import { execFileSync } from 'node:child_process';
-const owner='MaximilianBoller', repo='share';
+const owner='MaximilianBoller', repo='Frame';
 let result;
 try { result=execFileSync('git',['-c','credential.interactive=never','credential','fill'],{
   input:`protocol=https\nhost=github.com\nusername=${owner}\n\n`,encoding:'utf8',

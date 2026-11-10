@@ -1,6 +1,6 @@
 # FRAME – Bilder und Videos teilen
 
-Eine deutsche, responsive Projektgalerie für **MaximilianBoller/share**. Die Website läuft auf GitHub Pages, Medien und Projektverzeichnis liegen im selben Repository. Kein Cloudflare und kein eigener Server notwendig.
+Eine deutsche, responsive Projektgalerie für **MaximilianBoller/Frame**. Die Website läuft auf GitHub Pages, Medien und Projektverzeichnis liegen im selben Repository. Kein Cloudflare und kein eigener Server notwendig.
 
 ## Funktionen
 
@@ -23,10 +23,10 @@ Für ZIP-Downloads können Chrome und Edge am Computer direkt auf die Festplatte
 
 ## Website veröffentlichen
 
-1. Den Inhalt dieses Ordners ins **Wurzelverzeichnis** des öffentlichen Repositories `MaximilianBoller/share` auf Branch `main` übertragen.
+1. Den Inhalt dieses Ordners ins **Wurzelverzeichnis** des öffentlichen Repositories `MaximilianBoller/Frame` auf Branch `main` übertragen.
 2. In GitHub **Settings → Pages → Build and deployment → Source → GitHub Actions** wählen.
 3. Unter **Actions** den Workflow „Website auf GitHub Pages veröffentlichen“ ausführen, falls er nicht bereits durch den Push läuft.
-4. Die Website ist unter **https://maximilianboller.github.io/share/** erreichbar, sobald der Workflow erfolgreich abgeschlossen ist.
+4. Die Website ist unter **https://maximilianboller.github.io/Frame/** erreichbar, sobald der Workflow erfolgreich abgeschlossen ist.
 
 Der Workflow installiert reproduzierbar die Abhängigkeiten, führt Tests aus, baut JavaScript und veröffentlicht ausschließlich `public/`. Eigene Medien werden automatisch mit veröffentlicht. Es werden keine Tokens oder andere Secrets mitgeliefert.
 
@@ -36,11 +36,11 @@ Für ein anderes Repository `public/config.js` anpassen. Die Website funktionier
 
 ## Hochladen über die Website
 
-1. Unter GitHub **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token** einen zeitlich begrenzten Token für **ausschließlich `share`** erstellen.
+1. Unter GitHub **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token** einen zeitlich begrenzten Token für **ausschließlich `Frame`** erstellen.
 2. Repository permission: **Contents → Read and write**. Keine Berechtigung für Administration, Workflows oder andere Repositories nötig. Metadata-Lesezugriff wird von GitHub automatisch vergeben.
 3. Auf der Website **Verwalten** wählen und den Token eingeben.
 4. **Neues Projekt** wählen, Titel eingeben und speichern.
-5. Bilder/Videos hineinziehen oder auswählen. Nach dem Upload **1–3 Minuten** auf die Veröffentlichung durch GitHub Actions warten. Status bei Bedarf unter `https://github.com/MaximilianBoller/share/actions` ansehen.
+5. Bilder/Videos hineinziehen oder auswählen. Nach dem Upload **1–3 Minuten** auf die Veröffentlichung durch GitHub Actions warten. Status bei Bedarf unter `https://github.com/MaximilianBoller/Frame/actions` ansehen.
 6. **Link teilen** kopiert die Projektadresse. Besucher können sofort nach der Veröffentlichung ansehen und herunterladen.
 
 Der Token bleibt ausschließlich im JavaScript-Arbeitsspeicher des aktuellen Tabs. Er wird nur in Authorization-Headern an `api.github.com` gesendet. Er steht weder im Repository noch in Browser-Storage, Projektlinks oder Medien-Anfragen. Beim Neuladen oder Abmelden wird eine erneute Anmeldung nötig. Keine Tokens in `config.js` eintragen.

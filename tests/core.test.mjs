@@ -21,7 +21,7 @@ test('manifest rejects external paths and script MIME types',()=>{
 });
 test('a publish uses one manifest/tree/commit and a non-force ref update',async()=>{
   const calls=[];
-  const client=new GitHub({owner:'MaximilianBoller',repo:'share',branch:'main'},'test-token',async(url,options)=>{
+  const client=new GitHub({owner:'MaximilianBoller',repo:'Frame',branch:'main'},'test-token',async(url,options)=>{
     calls.push({url,...options,body:JSON.parse(options.body)});
     return Response.json({sha:'new-sha'});
   });
@@ -34,7 +34,7 @@ test('a publish uses one manifest/tree/commit and a non-force ref update',async(
   assert.ok(calls.every(c=>c.url.startsWith('https://api.github.com/')));
 });
 test('concurrent updates are reported without overwriting the branch',async()=>{
-  const client=new GitHub({owner:'MaximilianBoller',repo:'share'},'token',async()=>Response.json({message:'Update is not a fast forward'},{status:422}));
+  const client=new GitHub({owner:'MaximilianBoller',repo:'Frame'},'token',async()=>Response.json({message:'Update is not a fast forward'},{status:422}));
   await assert.rejects(client.request('/git/refs/heads/main',{method:'PATCH'}),/zwischenzeitlich geändert/);
 });
 test('real ZIP roundtrip preserves original bytes and Unicode filenames',async()=>{
