@@ -1,1 +1,12 @@
-{"version":1,"projects":[]}
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "8eda7f82-a00d-4b34-b67c-688285ce5974",
+      "title": "Kiran Grundstücke",
+      "description": "",
+      "created_at": "2026-11-10T17:42:15.729Z",
+      "files": []
+    }
+  ]
+}
