@@ -8074,7 +8074,7 @@ function renderProject() {
   const p2 = current, demo = isDemo(p2);
   const images = p2.files.filter((f2) => f2.type.startsWith("image/")).length;
   app.innerHTML = `<main class="shell"><div class="breadcrumb"><a href="#">Projekte</a><span>/</span><span>${escapeHtml(p2.title)}</span></div>
-    ${github && !demo ? `<div class="admin-strip"><span>Verwaltungsmodus \xB7 \xC4nderungen werden direkt auf GitHub gespeichert.</span><button id="delete-project" class="button ghost small">Projekt entfernen</button></div>` : ""}
+    ${!demo ? `<div class="admin-strip"><span>${github ? "Verwaltungsmodus \xB7 \xC4nderungen werden direkt auf GitHub gespeichert." : "Zum Bearbeiten und L\xF6schen bitte die Verwaltung \xF6ffnen."}</span><div class="admin-actions">${github ? '<button id="edit-project" class="button ghost small">Projekt bearbeiten</button><button id="delete-project" class="button ghost small">Projekt entfernen</button>' : '<button id="open-management" class="button ghost small">Verwaltung \xF6ffnen \u2197</button>'}</div></div>` : ""}
     <section class="project-hero"><div><div class="eyebrow">${demo ? "Beispielprojekt" : "Deine Projektdateien"}</div><h1>${escapeHtml(p2.title)}</h1><p>${escapeHtml(p2.description || "Hier findest du alle Bilder und Videos in Originalqualit\xE4t.")}</p></div><div class="intro-actions"><button id="share" class="button ghost">\u2197 Link teilen</button><button id="download-all" class="button" ${!p2.files.length ? "disabled" : ""}>\u2193 Alles herunterladen</button></div></section>
     <div class="project-meta"><span>${p2.files.length} Dateien</span><span>${images} Bilder \xB7 ${p2.files.length - images} Videos</span><span>${formatSize(total(p2.files))} gesamt</span><span>Erstellt am ${date(p2.created_at)}</span><span>Originalqualit\xE4t</span></div>
     ${github && !demo ? `<label class="dropzone" id="dropzone" tabindex="0"><strong>\u2191 Bilder & Videos hinzuf\xFCgen</strong><span class="dropzone-help">Dateien hier ablegen oder ausw\xE4hlen \xB7 bis 90 MiB pro Datei</span><input id="file-input" type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime,video/x-m4v" class="visually-hidden"></label>` : ""}
@@ -8094,6 +8094,8 @@ function renderProject() {
   $("#share").onclick = () => demo ? toast("Beispielprojekte dienen nur der Vorschau.") : clipboard(shareLink(p2));
   $("#download-all").onclick = downloadAll;
   if ($("#demo-setup")) $("#demo-setup").onclick = settings;
+  if ($("#edit-project")) $("#edit-project").onclick = () => createProject(p2);
+  if ($("#open-management")) $("#open-management").onclick = settings;
   if ($("#delete-project")) $("#delete-project").onclick = () => confirmDeleteProject(p2);
   const drop = $("#dropzone");
   if (drop) {
@@ -8118,7 +8120,7 @@ function renderProject() {
 }
 function renderFiles() {
   const files = current.files.filter((f2) => (filter === "all" || f2.type.startsWith(filter + "/")) && f2.name.toLowerCase().includes(search.toLowerCase()));
-  $("#files").innerHTML = files.map((f2) => `<article class="file-card"><button class="file-preview" data-preview="${escapeHtml(f2.id)}" aria-label="${escapeHtml(f2.name)} ansehen">${f2.type.startsWith("image/") ? `<img src="${escapeHtml(source(f2))}" alt="${escapeHtml(f2.name)}" loading="lazy">` : `<video src="${escapeHtml(source(f2))}#t=0.1" preload="metadata" muted playsinline></video><span class="play">\u25B6</span>`}<span class="file-kind">${f2.type.startsWith("image/") ? "BILD" : "VIDEO"}</span></button><div class="file-info"><div><div class="file-name" title="${escapeHtml(f2.name)}">${escapeHtml(f2.name)}</div><div class="file-size">${formatSize(f2.size)} \xB7 ORIGINAL</div></div><div class="file-actions"><button class="icon-button" data-download="${escapeHtml(f2.id)}" aria-label="${escapeHtml(f2.name)} herunterladen">\u2193</button>${github ? `<button class="icon-button" data-delete="${escapeHtml(f2.id)}" aria-label="${escapeHtml(f2.name)} entfernen">\xD7</button>` : ""}</div></div></article>`).join("") || (!isDemo(current) ? '<div class="empty"><h2>Keine Dateien gefunden.</h2><p>Hier erscheinen die Bilder und Videos dieses Projekts.</p></div>' : "");
+  $("#files").innerHTML = files.map((f2) => `<article class="file-card"><button class="file-preview" data-preview="${escapeHtml(f2.id)}" aria-label="${escapeHtml(f2.name)} ansehen">${f2.type.startsWith("image/") ? `<img src="${escapeHtml(source(f2))}" alt="${escapeHtml(f2.name)}" loading="lazy">` : `<video src="${escapeHtml(source(f2))}#t=0.1" preload="metadata" muted playsinline></video><span class="play">\u25B6</span>`}<span class="file-kind">${f2.type.startsWith("image/") ? "BILD" : "VIDEO"}</span></button><div class="file-info"><div><div class="file-name" title="${escapeHtml(f2.name)}">${escapeHtml(f2.name)}</div><div class="file-size">${formatSize(f2.size)} \xB7 ORIGINAL</div></div><div class="file-actions"><button class="icon-button" data-download="${escapeHtml(f2.id)}" aria-label="${escapeHtml(f2.name)} herunterladen">\u2193</button>${github ? `<button class="file-delete" data-delete="${escapeHtml(f2.id)}" title="Datei aus dem Projekt entfernen" aria-label="${escapeHtml(f2.name)} entfernen">Entfernen</button>` : ""}</div></div></article>`).join("") || (!isDemo(current) ? '<div class="empty"><h2>Keine Dateien gefunden.</h2><p>Hier erscheinen die Bilder und Videos dieses Projekts.</p></div>' : "");
   app.querySelectorAll("[data-preview]").forEach((b2) => b2.onclick = () => openPreview(current.files.findIndex((f2) => f2.id === b2.dataset.preview)));
   app.querySelectorAll("[data-download]").forEach((b2) => b2.onclick = () => downloadOne(current.files.find((f2) => f2.id === b2.dataset.download)));
   app.querySelectorAll("[data-delete]").forEach((b2) => b2.onclick = () => confirmDeleteFile(current.files.find((f2) => f2.id === b2.dataset.delete)));
@@ -8161,15 +8163,15 @@ function settings() {
     }
   };
 }
-function createProject() {
+function createProject(existing = null) {
   if (busy) return;
-  showDialog(`<h2>Platz f\xFCr dein n\xE4chstes Projekt.</h2><p>Gib deinem Projekt einen Namen. Die Dateien f\xFCgst du im n\xE4chsten Schritt hinzu.</p><form id="project-form"><label class="field">Projektname<input id="title" maxlength="100" placeholder="z. B. Sommerkollektion 2026" required></label><label class="field">Beschreibung <span class="hint">Optional</span><textarea id="description" maxlength="1000" placeholder="Ein paar Worte zu deinem Projekt \u2026"></textarea></label><p class="hint">Das Projekt und seine Dateien werden \xF6ffentlich auf GitHub gespeichert.</p><p id="form-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" data-close class="button ghost">Abbrechen</button><button type="submit" class="button dark">Projekt erstellen \u2197</button></div></form>`);
+  showDialog(`<h2>${existing ? "Projekt bearbeiten." : "Platz f\xFCr dein n\xE4chstes Projekt."}</h2><p>${existing ? "Passe Name und Beschreibung an. Dein Projektlink bleibt gleich." : "Gib deinem Projekt einen Namen. Die Dateien f\xFCgst du im n\xE4chsten Schritt hinzu."}</p><form id="project-form"><label class="field">Projektname<input id="title" maxlength="100" value="${escapeHtml(existing?.title || "")}" placeholder="z. B. Sommerkollektion 2026" required></label><label class="field">Beschreibung <span class="hint">Optional</span><textarea id="description" maxlength="1000" placeholder="Ein paar Worte zu deinem Projekt \u2026">${escapeHtml(existing?.description || "")}</textarea></label><p class="hint">Das Projekt und seine Dateien werden \xF6ffentlich auf GitHub gespeichert.</p><p id="form-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" data-close class="button ghost">Abbrechen</button><button type="submit" class="button dark">${existing ? "\xC4nderungen speichern" : "Projekt erstellen \u2197"}</button></div></form>`);
   $("#project-form").onsubmit = async (e3) => {
     e3.preventDefault();
     if (busy) return;
     busy = true;
     e3.submitter.disabled = true;
-    const p2 = { id: crypto.randomUUID(), title: $("#title").value.trim(), description: $("#description").value.trim(), created_at: (/* @__PURE__ */ new Date()).toISOString(), files: [] };
+    const p2 = { id: existing?.id || crypto.randomUUID(), title: $("#title").value.trim(), description: $("#description").value.trim(), created_at: (/* @__PURE__ */ new Date()).toISOString(), files: [] };
     if (!p2.title) {
       busy = false;
       e3.submitter.disabled = false;
@@ -8177,13 +8179,18 @@ function createProject() {
     }
     try {
       const s2 = await github.read();
-      s2.data.projects.unshift(p2);
-      await github.commit(s2, s2.data, [], `Projekt erstellt: ${p2.title}`);
+      if (existing) {
+        const target = s2.data.projects.find((x) => x.id === existing.id);
+        if (!target) throw Error("Das Projekt wurde inzwischen entfernt.");
+        target.title = p2.title;
+        target.description = p2.description;
+      } else s2.data.projects.unshift(p2);
+      await github.commit(s2, s2.data, [], `${existing ? "Projekt bearbeitet" : "Projekt erstellt"}: ${p2.title}`);
       projects = s2.data.projects;
       modal.close();
       location.hash = `project=${p2.id}`;
       render();
-      toast("Projekt erstellt. GitHub ver\xF6ffentlicht die \xC4nderung in wenigen Minuten.");
+      toast(`${existing ? "\xC4nderungen gespeichert." : "Projekt erstellt."} GitHub ver\xF6ffentlicht die \xC4nderung in wenigen Minuten.`);
     } catch (error) {
       $("#form-error").textContent = error.message;
     } finally {

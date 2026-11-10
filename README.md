@@ -5,6 +5,7 @@ Eine deutsche, responsive Projektgalerie für **MaximilianBoller/Frame**. Die We
 ## Funktionen
 
 - Projekte mit Titel und Beschreibung erstellen.
+- Projektnamen und Beschreibung nachträglich bearbeiten; der Projektlink bleibt gleich.
 - Bilder und Videos per Dateiauswahl oder Drag-and-drop hochladen.
 - Bilder in einer großen Vorschau ansehen; mit Pfeiltasten durchblättern.
 - Videos direkt abspielen; Browserunterstützung hängt vom Video-Codec ab. MP4 mit H.264 ist eine gute Ausgangsbasis, MOV spielt nicht jeder Browser ab.
@@ -12,6 +13,8 @@ Eine deutsche, responsive Projektgalerie für **MaximilianBoller/Frame**. Die We
 - Einzelne Originale herunterladen oder alle Dateien als ZIP speichern.
 - Einen direkten Projektlink kopieren und weitergeben. Empfänger benötigen keine Anmeldung.
 - Dateien und Projekte aus der aktuellen Website entfernen.
+
+Bearbeiten und Entfernen ist nach der Anmeldung unter **Verwalten** verfügbar. Im Projekt gibt es **Projekt bearbeiten** und **Projekt entfernen**, an jeder Datei eine Schaltfläche **Entfernen**. Nach dem Neuladen erneut anmelden, da Zugangsschlüssel nicht dauerhaft gespeichert werden.
 
 ## Öffentlichkeit und Grenzen
 
