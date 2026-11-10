@@ -33,6 +33,16 @@ test('a publish uses one manifest/tree/commit and a non-force ref update',async(
   assert.deepEqual(calls[3].body,{sha:'new-sha',force:false});
   assert.ok(calls.every(c=>c.url.startsWith('https://api.github.com/')));
 });
+test('GitHub requests preserve the browser fetch receiver',async()=>{
+  const client=new GitHub({owner:'MaximilianBoller',repo:'Frame'},'test-token',async function(url, options){
+    assert.equal(this,globalThis,'Window.fetch must be called with its global receiver');
+    assert.equal(url,'https://api.github.com/repos/MaximilianBoller/Frame');
+    assert.equal(options.headers.Authorization,'Bearer test-token');
+    return Response.json({private:false,permissions:{push:true}});
+  });
+  const repo=await client.verify();
+  assert.equal(repo.permissions.push,true);
+});
 test('concurrent updates are reported without overwriting the branch',async()=>{
   const client=new GitHub({owner:'MaximilianBoller',repo:'Frame'},'token',async()=>Response.json({message:'Update is not a fast forward'},{status:422}));
   await assert.rejects(client.request('/git/refs/heads/main',{method:'PATCH'}),/zwischenzeitlich geändert/);

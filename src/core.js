@@ -44,7 +44,7 @@ export function validateManifest(data) {
 export class GitHub {
   constructor(config, token, fetcher = fetch) {
     if (!/^[a-zA-Z0-9-]+$/.test(config.owner) || !/^[a-zA-Z0-9_.-]+$/.test(config.repo)) throw Error('Bitte GitHub-Benutzer und Repository in config.js eintragen.');
-    this.config = config; this.token = token; this.fetcher = fetcher;
+    this.config = config; this.token = token; this.fetcher = fetcher.bind(globalThis);
     this.root = `https://api.github.com/repos/${config.owner}/${config.repo}`;
   }
   async request(path, options = {}) {

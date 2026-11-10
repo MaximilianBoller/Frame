@@ -7925,7 +7925,7 @@ var GitHub = class {
     if (!/^[a-zA-Z0-9-]+$/.test(config3.owner) || !/^[a-zA-Z0-9_.-]+$/.test(config3.repo)) throw Error("Bitte GitHub-Benutzer und Repository in config.js eintragen.");
     this.config = config3;
     this.token = token;
-    this.fetcher = fetcher;
+    this.fetcher = fetcher.bind(globalThis);
     this.root = `https://api.github.com/repos/${config3.owner}/${config3.repo}`;
   }
   async request(path, options = {}) {
