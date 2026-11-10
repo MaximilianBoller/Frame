@@ -1,10 +1,14 @@
 // Uses the existing Git Credential Manager login; never writes or prints a token.
 import { execFileSync } from 'node:child_process';
 const owner='MaximilianBoller', repo='share';
-const result=execFileSync('git',['-c','credential.interactive=never','credential','fill'],{
+let result;
+try { result=execFileSync('git',['-c','credential.interactive=never','credential','fill'],{
   input:`protocol=https\nhost=github.com\nusername=${owner}\n\n`,encoding:'utf8',
   env:{...process.env,GCM_INTERACTIVE:'never',GIT_TERMINAL_PROMPT:'0'},stdio:['pipe','pipe','pipe']
-});
+}); } catch {
+  console.error('Bitte zuerst im Git Credential Manager als MaximilianBoller anmelden. Danach npm run publish:github erneut ausführen.');
+  process.exit(1);
+}
 const credential=Object.fromEntries(result.trim().split(/\r?\n/).map(line=>{const at=line.indexOf('=');return [line.slice(0,at),line.slice(at+1)];}));
 if (!credential.password) throw Error('Bitte zuerst mit MaximilianBoller im Git Credential Manager anmelden.');
 async function api(path,method='GET',body) {
